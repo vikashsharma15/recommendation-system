@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-COPY pyproject.toml uv.lock* ./
+COPY pyproject.toml uv.lock ./
 
-RUN uv sync --frozen --no-dev --extra-index-url https://download.pytorch.org/whl/cpu
+RUN uv sync --frozen --no-dev
 
 COPY . .
 
