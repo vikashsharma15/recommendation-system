@@ -5,8 +5,7 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from app.services.embedding_service import index_articles
-from app.db.database import create_tables
+from app.services.embedding import index_articles
 import logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -133,7 +132,7 @@ def detect_and_load(csv_path: str, max_rows: int) -> list:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Ingest articles into ChromaDB")
+    parser = argparse.ArgumentParser(description="Ingest articles into vector DB")
     parser.add_argument("--csv", required=True, help="Path to articles CSV")
     parser.add_argument("--max-rows", type=int, default=5000, help="Max articles to index")
     args = parser.parse_args()
@@ -142,7 +141,6 @@ def main():
         logger.error(f"CSV file not found: {args.csv}")
         sys.exit(1)
 
-    create_tables()
     os.makedirs("data/chroma", exist_ok=True)
 
     logger.info(f"Loading: {args.csv} (max {args.max_rows} rows)")
@@ -150,7 +148,7 @@ def main():
     logger.info(f"Parsed {len(articles)} valid articles. Starting embedding + indexing...")
 
     count = index_articles(articles)
-    logger.info(f"Done! {count} new articles indexed into ChromaDB.")
+    logger.info(f"Done! {count} new articles indexed.")
 
 
 if __name__ == "__main__":

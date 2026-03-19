@@ -1,13 +1,14 @@
 [project]
 name = "article-recommender"
 version = "1.0.0"
-description = "Content-based article recommendation using HF embeddings + ChromaDB"
+description = "Content-based article recommendation using HF embeddings + Pinecone"
 requires-python = ">=3.10"
 
 dependencies = [
     "fastapi==0.111.0",
     "uvicorn[standard]==0.30.1",
     "sentence-transformers==3.0.1",
+    "torch==2.6.0",
     "chromadb>=0.6.0",
     "sqlalchemy==2.0.31",
     "pydantic==2.8.2",
@@ -17,19 +18,23 @@ dependencies = [
     "httpx==0.27.0",
     "groq==0.9.0",
     "python-dotenv==1.0.1",
-    # auth
     "python-jose[cryptography]==3.3.0",
     "passlib[bcrypt]==1.7.4",
     "bcrypt==4.0.1",
-    # rate limiting
     "slowapi==0.1.9",
+    "psycopg[binary]==3.2.4",
+    "pinecone==5.0.1",
 ]
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=8.0",
-    "httpx>=0.27.0",
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cpu" }
 ]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
 
 [dependency-groups]
 dev = [
