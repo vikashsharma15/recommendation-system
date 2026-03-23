@@ -24,6 +24,8 @@ dependencies = [
     "slowapi==0.1.9",
     "psycopg[binary]==3.2.4",
     "pinecone==5.0.1",
+    "upstash-redis==1.4.0",
+    "email-validator==2.2.0",
 ]
 
 [tool.uv.sources]
