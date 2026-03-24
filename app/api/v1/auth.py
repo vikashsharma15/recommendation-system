@@ -32,12 +32,12 @@ def register_user(request: Request, payload: UserCreate, db: Session = Depends(g
 
     user = User(
         username=payload.username.lower(),
+        full_name=payload.full_name.strip() if payload.full_name else None,
         email=payload.email.lower(),
         hashed_password=hash_password(payload.password),
         interests=[i.value for i in payload.interests],
-        # ── Fix: proper defaults on register ──────────────
-        username_change_count=0,   # new user = 0 changes
-        username_changed_at=None,  # never changed
+        username_change_count=0,
+        username_changed_at=None,
     )
     db.add(user)
     db.commit()

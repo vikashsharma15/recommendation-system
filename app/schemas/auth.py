@@ -22,6 +22,7 @@ from app.core.constants import (
 
 class UserCreate(BaseModel):
     username: str
+    full_name: Optional[str] = None
     email: str
     password: str
     interests: List[InterestCategory]
